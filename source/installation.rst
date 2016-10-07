@@ -1,2 +1,2 @@
-Instalaltion Guide
+Installation Guide
 ============
