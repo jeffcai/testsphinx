@@ -1,0 +1,823 @@
+Architecture and Design
+===========================
+
+Introduction
+-----------------
+
+This document provides an Architecture and Development Guide to build
+dynamic forms applications using Dynamic Forms Asset.
+
+Intended Audience
+-----------------
+
+The intended audiences for this document are the business contributors,
+developers, architects, and IT leadership teams.
+
+Feature overview
+-----------------
+
+Forms are the key components of all web-based applications. Although
+they are important, web developers often spend much time developing the
+forms which are difficult to develop and hard to maintain. Using ODM
+Dynamic Forms Asset, web developers can easily develop those forms with
+less coding; moreover, developers can dynamically change them at
+runtime. The followings are the main features in this asset.
+
+-  Define a form/question in Dynamic Forms Asset so that a nontechnical
+   developer is able to directly participate in the iterative process of
+   form design.
+
+-  Provide Form Wizard function. Making a long list of questions more
+   palatable is to break the form into several pages, such as the
+   wizards that are common in software applications.
+
+-  Establish random navigation between form pages (backward and
+   forward).
+
+-  Separate the look-and-feel of a form from the definition of the form.
+   Currently HTML and jQuery are the two types of control supported on
+   UI. and CSS compliance configuration/customization are also
+   supported.
+
+-  Provide client side field-level validation as well as server side
+   field-level validation.
+
+-  Support either dynamic data or modeled data defined by XSD.
+
+-  Allow customer to maintain the questions type (label, type, options,
+   etc) type easily.
+
+-  Provide a summary page to collect all the question answers in the
+   dynamic forms.
+
+-  Able to group multiple questions in one page and could also
+   add/remove the group dynamically.
+
+-  Support dynamically change status of page item, for instance, the
+   group can be shown or hidden dynamically based on user’s responses on
+   specific question.
+
+-  Provide a web-based UI for designing forms through a WYSISYG tool.
+
+-  Provide a simulation tool in RTS for enabling business users to
+   validate rules of forms.
+
+-  Localization is supported in rules and UI.
+
+-  Provide customized rule logic to control page behavior, such as
+   changing question behavior (hide, show, change response), depending
+   on other question answers, and so on.
+
+Use Case Diagram
+-----------------
+
+Manage Question
+`````````````
+
+
+**Brief Description**:
+
+The purpose of “Manage Question” use case is to provide the capability
+to define question, create question, delete question, and change
+question type.
+
+**Basic Flow**:
+
+1. Business user can easily define questions in rules.
+
+2. Business user can easily write rules to add question on the UI.
+
+3. Business user can easily write rules to control question behaviour:
+hide question, change question response, options and so on.
+
+Manage Pages
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Pages” use case is to provide the capability to
+define pages and create pages on the UI.
+
+**Basic Flow**:
+
+1. Business users can easily define pages in rules.
+
+2. Business users can easily write rules to create pages on the UI.
+
+3. Business users can easily write rules to control page behavior, such
+as hide page.
+
+Manage Groups
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Group” use case is to provide the capability to
+define groups, create groups (questions) on the UI.
+
+**Basic Flow**:
+
+1. Business users can easily define groups in rules.
+
+2. Business users can easily write rules to add question to group.
+
+3. Business users can add multiple groups (questions) to the UI.
+
+Manage Sections
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Section” use case is to provide the capability to
+define sections, create sections (questions) on the UI.
+
+**Basic Flow**:
+
+1. Business users can easily define sections in rules.
+
+2. Business users can easily write rules to add question to section.
+
+3. Business users can add sections to the group.
+
+4. Business users can add sections (questions) to the UI.
+
+Manage Form UI 
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Form UI” use case is to provide the capability to
+render questions on the UI.
+
+**Basic Flow**:
+
+1. Business users can easily customize the layout of the question
+control using the predefined template.
+
+2. Business users can choose different UI render types (HTML or jQuery).
+
+Manage Answers
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Answers” use case is to provide the capability to
+manage answers on the UI, and enable the ability to map answers to other
+domain models.
+
+**Basic Flow**:
+
+1. Business user can use summary page to collect all questions and
+answers.
+
+2. Business user can map question answer to other domain model.
+
+Manage Form Validation
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Form Validation” use case is to provide the
+capability to define the business logic to check the question answers.
+
+**Basic Flow**:
+
+1. Business users can define required property of one question in the
+rules for the client side validation.
+
+2. Business users can write the rules to validate the answers on the
+server side.
+
+Manage Process
+`````````````
+
+**Brief Description**:
+
+The purpose of “Manage Process” use case is to provide the capability to
+leverage technology.
+
+**Basic Flow**:
+
+1. Business users can define question event based on the rule
+   definitions.
+
+Manage Page Navigation
+`````````````
+
+**Brief Description** :
+
+The purpose of “Manage Page Navigation” use case is to provide the
+capability to jump from page to another page.
+
+**Basic Flow**:
+
+1. Business user can define the page jump function to support page jump
+to another page.
+
+Application Architecture
+-----------------------------------
+
+Overall architecture is shown as below:
+
+Regarding rule engine invocation mode, the asset support three modes:
+J2SE, EJB3\_REMOTE and WEBSERVICE and you could set the parameter
+**RuleEngineInvocationType** in web.xml of dynamic forms web
+application. Below are the architecture diagrams:
+
+**J2SE mode**
+
+The dynamic forms web application and rule execution server are running
+in the same server.
+
+**EJB3\_REMOTE mode**
+
+The dynamic forms application and rule execution server are running in
+different servers.
+
+**Web Service Mode**
+
+The dynamic forms web application is deployed in a server, and the
+dynamic forms web service is deployed in a different server, in which
+the rule execution server is deployed as well and web service
+application will interact with rule engine with J2SE way.
+
+Sequence Diagrams
+-----------------------------------
+
+Move to Next Page
+`````````````
+
+Move to Previous Page
+`````````````
+
+ Invocation 
+`````````````
+
+Jump Navigation
+`````````````
+
+BRMS Deployment Architecture 
+-----------------------------------
+
+Rule Artifacts and UI Design
+-----------------------------------
+
+One typical DF project structure looks like this:
+
+The below describes these projects:
+
+-  Common Rules Project contains basic BOM which defines common
+   questionnaire model, helper and utilities.
+
+-  DF Rules Project, stand for dynamic form rules project, is
+   responsible for the actual questionnaire definitions and related
+   rules. This part can be designed to multiple projects based on the
+   questionnaire complexity.
+
+-  Web Project is responsible to render the questionnaire.
+
+-  Business Rule Project is optional, based on the actual business
+   requirement.
+
+Rule Flow Design
+----------------
+
+As described in above diagram, rule flow is typical written in the DF
+rule project. The main rule flow is shown below.
+
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| ***Dynamic Forms Rule Flow Introduction***   |
++==============================================+=================================================================================================================================================+==============+
+| **Task Name **                               | **Task Description**                                                                                                                            | **Notes:**   |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| Initialize Form                              | Initialize the dynamic forms, define the question, page, and group definitions in forms. Provide addition attributes in question definitions.   |              |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| Initialize Activity                          | Register the dynamic behaviors in the event activity decision table,                                                                            |              |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| Pre Process                                  | Pre process before the normal flow. Most used for the server side validation, when the next page wizard is started.                             |              |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| Page Navigation                              | Control the page navigation, decide the specified page is hidden or shown.                                                                      |              |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| Dynamic Questions                            | Add action rules which are used to control question logic in the pages dynamically.                                                             |              |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+| Post Process                                 | Process after all pages flow logic completed. This task is used to do the data mapping between questionnaire and object.                        |              |
++----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+
+Rule Design
+-----------
+
+The following screenshot illustrates the detailed construct of rule
+packages in one typical DF rule project.
+
+This rule project provides a number of rule templates for the
+definitions of pages, groups, sections and questions.
+
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ***Dynamic Form Rules Introduction***   |
++=========================================+===========================================================================================================================================================================================+==================================================================================================================================================================================================+=============================================================================================================================================================================================================================================================================================================================================================+
+| **Rule Package Name **                  | **Rules Descriptions**                                                                                                                                                                    | **Notes:**                                                                                                                                                                                       |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 1 – Initialize                          | 1 – Definitions                                                                                                                                                                           | The rules in this package are used to define kinds of artifacts which consist of dynamic forms: question, page, section and group.                                                               | *The row order of Page-Definition decision table is the order of dynamic forms pages.*                                                                                                                                                                                                                                                                      |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                         | 2 – Question Options and Attributes                                                                                                                                                       | The rules in this package are used to declare optional attributes such as required attribute, question options, and also could bind event to question for invoking rules in one page             |                                                                                                                                                                                                                                                                                                                                                             |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                         | 3 – Page Setup                                                                                                                                                                            | The rules in this package are used to set up pages through adding questions into group or page.                                                                                                  | *It also works to put the rule for initializing the pages under the package “4 – Dynamic Questions”, the difference between these two ways is: the rules under the package “3 – Page Setup” only are fired once and the rules under the package “4 – Dynamic Questions” always are fired, the previous is more efficient and the later is more flexible.*   |
+|                                         |                                                                                                                                                                                           |                                                                                                                                                                                                  |                                                                                                                                                                                                                                                                                                                                                             |
+|                                         |                                                                                                                                                                                           |                                                                                                                                                                                                  | *The row order of Form-Definition decision table is the order of questions, groups on a page. It also defines the order of questions in a group.*                                                                                                                                                                                                           |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                         | 4 – Question Event Activities                                                                                                                                                             | The rules in this package are used to define the dynamic behaviors, for example, to show/hide some page items (group, section, and question) depending on the answer of one specific question.   |                                                                                                                                                                                                                                                                                                                                                             |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 2 - Pre Process                         | The rules in this package could be used for validating, you could put other rules according to your applications requirements                                                             |                                                                                                                                                                                                  |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 3 - Page Navigation                     | The rules in this package are used for controlling the pages, for instance show/hide the page according to some conditions                                                                |                                                                                                                                                                                                  |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 4 - Dynamic Questions                   | The rules in this package could be used for setting up the page and controlling the questions on some pages, for instance add questions into pages or show/hide questions on some pages   |                                                                                                                                                                                                  |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 5 - Post Process                        | The rules in this package could be used for mapping the dynamic forms data to the domain models of the application.                                                                       |                                                                                                                                                                                                  |
++-----------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Question Definition
+~~~~~~~~~~~~~~~~~~~
+
+In question definition, the decision table is used to allow questions to
+be defined outside of any questionnaire flow. The question code is the
+identifier of the question definition.
+
+Question Option Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In question option definition, the decision table is used to define all
+the options of questions outside of question definition.
+
+Page Definition
+~~~~~~~~~~~~~~~
+
+In page definition, the decision table is used to allow business user to
+define the dynamic form page property.
+
+The page code is the identifier of this page.
+
+Group Definition
+~~~~~~~~~~~~~~~~
+
+In group definition, the decision table is used to define groups for
+better rendering in the UI. Groups only need to be defined once and will
+be reused throughout all question definitions in the questionnaire
+application, if the Multiple property of group is set to true, the last
+column “Add A Group Instance When Initializing” is used to indicate
+whether a group instance will be added to a page or not.
+
+Section Definition
+~~~~~~~~~~~~~~~~~~
+
+In section definition, the decision table is used to define sections for
+better rendering in the UI. Sections only need to be defined once and
+will be reused throughout the application.
+
+Additional Question Attributes Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the decision table of additional question attribute, business users
+can define whether the answer of this question is mandatory, value type,
+default response, max length, regular expression constraint and the
+invalid message against constraint.
+
+If required property of question is set to true, the client side will
+give the hint about the error message.
+
+If response format is selected, the client side will validate user’s
+response and show error message to users if incorrect format response is
+input.
+
+Additional Page Attributes Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the decision table of additional page attribute definition, business
+users can define the help document for pages, it will pop up the related
+help content when mouse moves through the page header in UI.
+
+If both help text and help URL are set, help text will be used.
+
+Additional Group Attributes Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the decision table of additional group attribute definition, business
+users can define the help document for groups, it will pop up the
+related help content when mouse moves through the group header in UI.
+
+If both help text and help URL are set, help text will be used.
+
+Additional Section Attributes Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the decision table of additional section attribute definition,
+business users can define the help document for sections, it will pop up
+the related help content when mouse moves through the section header in
+UI.
+
+If both help text and help URL are set, help text will be used.
+
+Option Definition
+~~~~~~~~~~~~~~~~~
+
+In option definition, the decision table “Option Definition” is used to
+define options for questions with specific types-SINGLE\_SELECT,
+MULTI\_SELECT, MULTI\_CHOICE, RADIO etc.
+
+Triggering Event Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since sometimes is required to create interactive web applications,
+below function is provided to support .
+
+In the following decision table “Triggering Event Definition”, business
+users can register questions that will trigger the AJAX invocation. In
+column “Client Event”, there are two options for user to choose:
+refreshing the question and refreshing the page. Both of them will
+submit the whole page, the difference is refreshing the page will
+refresh the whole page, but refreshing the question only refreshes the
+affected questions minimally.
+
+After registering the questions here, users can author action rules to
+implement the event triggering for these question. For example:
+
+***if***
+
+*the response of question **City** on page **PersonalInfo** is
+**"XXX"***
+
+***then***
+
+*change options for question **District** on page **PersonalInfo** to
+**{** **"X1"** , **"X2"** , **"X2"** **}** ;*
+
+Page Setup
+~~~~~~~~~~
+
+In forms definition, the decision table “Form Definition” is used to set
+up forms through setting the mapping between pages, groups, sections and
+questions.
+
+Question Event Activity Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following decision table “Question Event Activity Definition”
+provides a simple way for user to define standard event behaviors for
+questions.
+
+If one question’s visibility depends on another question’s response, you
+can define this reactivity in above decision table, during rendering
+client-side JavaScript code will be generated based on above definition.
+Now only SHOW/HIDE activity is supported, but can be extended as needed.
+
+XOM Design
+----------
+
+Questionnaire object model is the core model of the ODM Dynamic Forms
+Asset. In this model it defines the objects such as page, question and
+group, and so on, which will be used in the rules authoring. The
+following class diagram illustrates the architecture of the
+questionnaire object model.
+
+The following table describes the main classes in above questionnaire
+object model diagram.
+
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Class Name**         | **Class Description**                                                                                                                                                                                                                                                                                                                     |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Questionnaire          | Questionnaire is the concrete implementation of IQuestionnaire. It defines kinds of behaviors of dynamic forms that are used to navigate and change forms at run time such as adding, removing and getting page. The dynamic forms consists of pages and page items on pages such as, questions and groups.                               |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| QuestionnaireItem      | QuestionnaireItem is the abstract implementation of IQuestionnaireItem. Base class for all questionnaire items: page, group, question etc.                                                                                                                                                                                                |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Question               | Question is the concrete implementation of IQuestion. It Defines the question which is used to describe form fields on pages, and besides the methods declared in the interface IQuestionnaireItem there are many other methods declared in this class used to describe form fields such as response type, options, respons, and so on.   |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Option                 | Option is is the concrete implementation of IOption. It defines the options of questions.                                                                                                                                                                                                                                                 |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Page                   | Page is the concrete implementation of IPage. It defines a container "Page" for storing a list of page items which will be shows to user as a page. The page item can be a question, a section or a group.                                                                                                                                |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Group                  | Group is the concrete implementation of IGroup. It defines a container "Group" for storing a list of questions and sections which will be rendered as a group on a page. It cannot be shown to user independent with a page.                                                                                                              |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Section                | Section is the concrete implementation of ISection. It defines a container "Section" for storing a list of questions which will be rendered as a section on a group or a page. It cannot be shown to user independent with a group or a page.                                                                                             |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| PageItemContainer      | PageItemContainer is the abstract implementation of IPageItemContainer. Base class for defining the container that holds page items.                                                                                                                                                                                                      |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| IPageItem              | The interface defines the item that can be put into the container defined by the interface IPageItemContainer, this interface is a mark-up interface without any method.                                                                                                                                                                  |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Event                  | Event is the concrete implementation of IEvent. It is to define the event which will be binded to questions for triggering invocation.                                                                                                                                                                                                    |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ClientAction           | ClientAction is the concrete implementation of IClientAction. It is to define client actions which are used to respond to invocation.                                                                                                                                                                                                     |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| AjaxHandler            | AjaxHandler is the concrete implementation of IAjaxHandler. It is used to handle invocation.                                                                                                                                                                                                                                              |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| InitializationHelper   | A class contains helper methods for initializing and localizing questionnaire.                                                                                                                                                                                                                                                            |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| QuestionnaireHelper    | A class contains helper methods for questionnaire.                                                                                                                                                                                                                                                                                        |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| QuestionnaireUtil      | A class contains utility methods for miscellaneous functionalities, such as converting response or getting kinds of page items etc.                                                                                                                                                                                                       |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EventActivity          | EventActivity is the concrete implementation of IEventActivity. It is to define the activity and bind the related trigging question and affected page items (question, section, and group) together.                                                                                                                                      |
++------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+BOM Design
+----------
+
+The Business Action Language uses the Business Object Model (BOM) which
+is on top of the actual object model. The BOM is used to define a
+language vocabulary of nouns (*objects and attributes*) and verbs
+(*methods*) in which to express the BAL rules and decision tables. In
+most cases, there is a one-to-one mapping between BOM objects and the
+underlying object model.
+
+See the “Dynamic Forms Model Descriptions.pdf” for more details of BOM
+design.
+
+ Dynamic Domain Design
+----------------------
+
+Definition
+~~~~~~~~~~
+
+A dynamic domain is a way of defining the set of possible values for a
+type. With dynamic domain, the set of values is stored and managed
+outside the business object model, and changes to the set of values are
+automatically reflected in the BOM. When policy managers write business
+rules using the type, they choose from a list of values that is created
+dynamically and always up-to-date.
+
+In Dynamic Forms Services Asset, a customized plug-in is developed for
+the decision table. Custom properties need be configured to enable the
+dynamic domain for a BOM class in Rule Designer. The following image
+shows the configuration for question code.
+
+There are six properties below that could be specified:
+
+**domainValueProviderName**
+
+This property is for the standard extension point of dynamic domain
+plug-in. It is mandatory and the value must be input as
+**DecisionTableDomainValueProvider**.
+
+**DecisionTableDomainValueProvider.projectName**
+
+This property is an optional property. The plug-in will search the
+decision tables in this rule project if it is set.
+
+If it is not set or the value is blank, the plug-in will use the current
+rule project by default.
+
+**DecisionTableDomainValueProvider.rulePackageName**
+
+This property is a mandatory property to specify the package for the
+source of domain values. It should be the fully qualified name of a
+current rule package.
+
+**DecisionTableDomainValueProvider.decisionTableName**
+
+This property is an optional property. The value of this property should
+be the name of a decision table. The plug-in will search this decision
+table under the specified rule package and use it as the source of
+domain values. If the value is not set, the plugin will search all
+decision tables in the specified rule package and its sub-packages.
+
+**DecisionTableDomainValueProvider.labelColumnIndex**
+
+This property is a mandatory property. It specifies the column index for
+the label (verbalization) of the domain value. 0 stands for the first
+column.
+
+**DecisionTableDomainValueProvider.codeColumnIndex**
+
+This is an optional property. It specifies the column index for the
+domain name (the member name of the BOM class). If it is not set or the
+value is blank, the plug-in will use the domain label instead. The index
+counts from 0, which means the first column is 0. Each sub-column will
+be counted separately. For example, if user wants to use “Label” column
+in below decision table as domain code, the property should be specified
+2.
+
+**Note:** If you renamed the rule package or rules which are related to
+the dynamic domain configuration, you need to update the custom
+properties and the plugin will report errors on Problem view of Rule
+Designer if the configuration is wrong when you clean and re-build the
+workspace.
+
+Usage
+~~~~~
+
+For example, when double-clicking the QuestionCode entry in the BOM, the
+following screenshot will be presented.
+
+Fill the value in the Question Definition table, then click the
+Synchronize link, and the question code domain is generated.
+
+Web Application Design
+-----------------------------------
+
+This section discusses web application architecture and UI layout.
+
+UI Rending
+`````````````
+
+The figure below shows an example of a standard dynamic form application
+rendered on the Web Server, UI is responsive implemented with Bootstrap.
+
+The figure below shows the AJAX usage. If user clicks the Add button,
+one cloned group will be added in the current page.
+
+After clicking the button, user will see the page will have one more
+family info groups on the page.\ **
+**
+
+After finishing all the questions on the form wizard, users will see the
+summary page, as shown in the following figure.
+
+Application Structure 
+`````````````
+
+| In dynamic forms application, the web project structure includes the
+  following items:
+| • Provide jQuery distribution for development
+
+• Custom HTML (jQuery) control template
+
+• HTML (head and footer) and CSS sub divided by sections
+
+• Dynamic Form configuration
+
+**jQuery & Bootstrap Support**
+
+Currently jQuery and bootstrap is supported. The following snapshot
+represents some common jQuery control libraries used in default.jsp by
+default, more libraries can be added by customization.
+
+**Navigation Support**
+
+The following code snippet in default.jsp is responsible for the
+implementation of navigation bar, you could rewrite them as required.
+
+**Question Rendering**
+
+The following two code snippet show how the questions are rendered on
+the current page.
+
+**Localization Support**
+
+The following codes shows how to localize the strings on JSP pages
+through leveraging JSTL technology
+
+*<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>*
+
+*<fmt:setLocale value="<%=request.getLocale().toString()%>"/> *
+
+*<fmt:bundle basename="dynamicforms\_resource">*
+
+*<fmt:message
+key="com.ibm.websphere.ilog.dynamicforms.property.page.has.errors" />*
+
+In order to localize the labels in FreeMarker templates you need to set
+DynamicFormsContext which holds the locale and base name of resource
+file to the current thread.
+
+**Form Validation**
+
+If the question definitions attribute is set to “required” in the
+decision table, the question requires an answer if it appears in the
+page. If the answer is not filled in, the user-friendly error message is
+presented, which is shown as in the following figure.
+
+**Form Configuration**
+
+In the web conf directory, the **dynamicforms.properties** file provides
+some advanced features for the Dynamic Forms Application through the
+following configurations.
+
+a) Jump
+
+If the JUMP property is set to true, the page will have the ability to
+jump from one page to another.
+
+Note: The hidden page cannot jump to another page.
+
+| b) Auto Fill
+| If the AUTO Fill property is set to true, the sample answer can be
+  predefined for the question. After this feature is used, the question
+  answers need to be provided in the autoFill.xml.
+
+Also, you can set initial parameters in the **web.xml** as follows
+
+UI layout design
+`````````````
+
+The asset provides one tool – Layout Designer to help developers to
+design the UI layout.
+
+Please refer to Dynamic Forms Layout Editor User Manual.pdf for the more
+details.
+
+Logging
+-----------------------------------
+
+SLF4j is used as the logging interface. SLF4J (Simple logging Façade for
+Java) provides a Java logging API by means of a simple façade pattern.
+The underlying logging backend is determined at runtime by adding the
+desired binding to the classpath.
+
+By default, Log4j jar is provided as the underlying logging backend.
+When Log4j is not found in classpath, the JDK logger will be used.
+
+User can edit ‘log4j.xml’ to declare user own categories, log levels and
+appenders (which determines the output terminal like standard out or a
+log file).
+
+The following is the default logging configuration used in the Dynamic
+Forms Asset.
+
+*<?xml version="1.0" encoding="UTF-8" ?>*
+
+*<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">*
+
+*<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>*
+
+*<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">*
+
+*<layout class="org.apache.log4j.PatternLayout">*
+
+*<param name="ConversionPattern" value="%d -%-4r [%t] %-5p %x - %m%n"
+/>*
+
+*</layout>*
+
+*<filter class="org.apache.log4j.varia.LevelRangeFilter">*
+
+*<param name="LevelMax" value="ERROR" />*
+
+*<param name="LevelMin" value="TRACE" />*
+
+*</filter>*
+
+*</appender>*
+
+*<appender name="FILE" class="org.apache.log4j.RollingFileAppender">*
+
+*<param name="File" value="logs/dynamicforms.log"/>*
+
+*<param name="MaxFileSize" value="1MB" />*
+
+*<param name="Append" value="true" />*
+
+*<param name="MaxBackupIndex" value="30" />*
+
+*<param name="Threshold" value="DEBUG" />*
+
+*<layout class="org.apache.log4j.PatternLayout">*
+
+*<param name="ConversionPattern" value="[%d{ISO8601}]%5p%6.6r[%t]%x -
+%m%n" />*
+
+*</layout>*
+
+*</appender>*
+
+*<logger name="freemarker">*
+
+*<level value="ERROR"/>*
+
+*<appender-ref ref="FILE" /> *
+
+*</logger>*
+
+*<logger name="com.ibm.websphere.ilog.dynamicforms.ui.util">*
+
+*<level value="ERROR"/>*
+
+*<appender-ref ref="FILE" /> *
+
+*</logger>*
+
+*<logger name="org.mortbay">*
+
+*<level value="ERROR"/>*
+
+*<appender-ref ref="FILE" /> *
+
+*</logger>*
+
+*<root>*
+
+*<level value="ERROR" />*
+
+*<appender-ref ref="FILE" />*
+
+*</root>*
+
+*</log4j:configuration>*
+
+Dynamic Forms Simulation 
+-----------------------------------
+
+The purpose of developing Dynamic Forms simulation is to provide a tool
+for validating rules in RTS through simulating forms which is close to
+the forms accessed by end users. It dynamically generates ruleset
+archive and executes rules and render forms based on execution result,
+the behavior of forms is exactly same as the forms that will be accessed
+by end user.

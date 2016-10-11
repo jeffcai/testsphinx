@@ -1,0 +1,712 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Architecture and Design &#8212; TestSphinx v1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'v1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TestSphinx v1.0 documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="architecture-and-design">
+<h1>Architecture and Design<a class="headerlink" href="#architecture-and-design" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document provides an Architecture and Development Guide to build
+dynamic forms applications using Dynamic Forms Asset.</p>
+</div>
+<div class="section" id="intended-audience">
+<h2>Intended Audience<a class="headerlink" href="#intended-audience" title="Permalink to this headline">¶</a></h2>
+<p>The intended audiences for this document are the business contributors,
+developers, architects, and IT leadership teams.</p>
+</div>
+<div class="section" id="feature-overview">
+<h2>Feature overview<a class="headerlink" href="#feature-overview" title="Permalink to this headline">¶</a></h2>
+<p>Forms are the key components of all web-based applications. Although
+they are important, web developers often spend much time developing the
+forms which are difficult to develop and hard to maintain. Using ODM
+Dynamic Forms Asset, web developers can easily develop those forms with
+less coding; moreover, developers can dynamically change them at
+runtime. The followings are the main features in this asset.</p>
+<ul class="simple">
+<li>Define a form/question in Dynamic Forms Asset so that a nontechnical
+developer is able to directly participate in the iterative process of
+form design.</li>
+<li>Provide Form Wizard function. Making a long list of questions more
+palatable is to break the form into several pages, such as the
+wizards that are common in software applications.</li>
+<li>Establish random navigation between form pages (backward and
+forward).</li>
+<li>Separate the look-and-feel of a form from the definition of the form.
+Currently HTML and jQuery are the two types of control supported on
+UI. and CSS compliance configuration/customization are also
+supported.</li>
+<li>Provide client side field-level validation as well as server side
+field-level validation.</li>
+<li>Support either dynamic data or modeled data defined by XSD.</li>
+<li>Allow customer to maintain the questions type (label, type, options,
+etc) type easily.</li>
+<li>Provide a summary page to collect all the question answers in the
+dynamic forms.</li>
+<li>Able to group multiple questions in one page and could also
+add/remove the group dynamically.</li>
+<li>Support dynamically change status of page item, for instance, the
+group can be shown or hidden dynamically based on user’s responses on
+specific question.</li>
+<li>Provide a web-based UI for designing forms through a WYSISYG tool.</li>
+<li>Provide a simulation tool in RTS for enabling business users to
+validate rules of forms.</li>
+<li>Localization is supported in rules and UI.</li>
+<li>Provide customized rule logic to control page behavior, such as
+changing question behavior (hide, show, change response), depending
+on other question answers, and so on.</li>
+</ul>
+</div>
+<div class="section" id="use-case-diagram">
+<h2>Use Case Diagram<a class="headerlink" href="#use-case-diagram" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="manage-question">
+<h3>Manage Question<a class="headerlink" href="#manage-question" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Question” use case is to provide the capability
+to define question, create question, delete question, and change
+question type.</p>
+<p><strong>Basic Flow</strong>:</p>
+<ol class="arabic simple">
+<li>Business user can easily define questions in rules.</li>
+<li>Business user can easily write rules to add question on the UI.</li>
+</ol>
+<p>3. Business user can easily write rules to control question behaviour:
+hide question, change question response, options and so on.</p>
+</div>
+<div class="section" id="manage-pages">
+<h3>Manage Pages<a class="headerlink" href="#manage-pages" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Pages” use case is to provide the capability to
+define pages and create pages on the UI.</p>
+<p><strong>Basic Flow</strong>:</p>
+<ol class="arabic simple">
+<li>Business users can easily define pages in rules.</li>
+<li>Business users can easily write rules to create pages on the UI.</li>
+</ol>
+<p>3. Business users can easily write rules to control page behavior, such
+as hide page.</p>
+</div>
+<div class="section" id="manage-groups">
+<h3>Manage Groups<a class="headerlink" href="#manage-groups" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Group” use case is to provide the capability to
+define groups, create groups (questions) on the UI.</p>
+<p><strong>Basic Flow</strong>:</p>
+<ol class="arabic simple">
+<li>Business users can easily define groups in rules.</li>
+<li>Business users can easily write rules to add question to group.</li>
+<li>Business users can add multiple groups (questions) to the UI.</li>
+</ol>
+</div>
+<div class="section" id="manage-sections">
+<h3>Manage Sections<a class="headerlink" href="#manage-sections" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Section” use case is to provide the capability to
+define sections, create sections (questions) on the UI.</p>
+<p><strong>Basic Flow</strong>:</p>
+<ol class="arabic simple">
+<li>Business users can easily define sections in rules.</li>
+<li>Business users can easily write rules to add question to section.</li>
+<li>Business users can add sections to the group.</li>
+<li>Business users can add sections (questions) to the UI.</li>
+</ol>
+</div>
+<div class="section" id="manage-form-ui">
+<h3>Manage Form UI<a class="headerlink" href="#manage-form-ui" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Form UI” use case is to provide the capability to
+render questions on the UI.</p>
+<p><strong>Basic Flow</strong>:</p>
+<p>1. Business users can easily customize the layout of the question
+control using the predefined template.</p>
+<ol class="arabic simple" start="2">
+<li>Business users can choose different UI render types (HTML or jQuery).</li>
+</ol>
+</div>
+<div class="section" id="manage-answers">
+<h3>Manage Answers<a class="headerlink" href="#manage-answers" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Answers” use case is to provide the capability to
+manage answers on the UI, and enable the ability to map answers to other
+domain models.</p>
+<p><strong>Basic Flow</strong>:</p>
+<p>1. Business user can use summary page to collect all questions and
+answers.</p>
+<ol class="arabic simple" start="2">
+<li>Business user can map question answer to other domain model.</li>
+</ol>
+</div>
+<div class="section" id="manage-form-validation">
+<h3>Manage Form Validation<a class="headerlink" href="#manage-form-validation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Form Validation” use case is to provide the
+capability to define the business logic to check the question answers.</p>
+<p><strong>Basic Flow</strong>:</p>
+<p>1. Business users can define required property of one question in the
+rules for the client side validation.</p>
+<p>2. Business users can write the rules to validate the answers on the
+server side.</p>
+</div>
+<div class="section" id="manage-process">
+<h3>Manage Process<a class="headerlink" href="#manage-process" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong>:</p>
+<p>The purpose of “Manage Process” use case is to provide the capability to
+leverage technology.</p>
+<p><strong>Basic Flow</strong>:</p>
+<ol class="arabic simple">
+<li>Business users can define question event based on the rule
+definitions.</li>
+</ol>
+</div>
+<div class="section" id="manage-page-navigation">
+<h3>Manage Page Navigation<a class="headerlink" href="#manage-page-navigation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Brief Description</strong> :</p>
+<p>The purpose of “Manage Page Navigation” use case is to provide the
+capability to jump from page to another page.</p>
+<p><strong>Basic Flow</strong>:</p>
+<p>1. Business user can define the page jump function to support page jump
+to another page.</p>
+</div>
+</div>
+<div class="section" id="application-architecture">
+<h2>Application Architecture<a class="headerlink" href="#application-architecture" title="Permalink to this headline">¶</a></h2>
+<p>Overall architecture is shown as below:</p>
+<p>Regarding rule engine invocation mode, the asset support three modes:
+J2SE, EJB3_REMOTE and WEBSERVICE and you could set the parameter
+<strong>RuleEngineInvocationType</strong> in web.xml of dynamic forms web
+application. Below are the architecture diagrams:</p>
+<p><strong>J2SE mode</strong></p>
+<p>The dynamic forms web application and rule execution server are running
+in the same server.</p>
+<p><strong>EJB3_REMOTE mode</strong></p>
+<p>The dynamic forms application and rule execution server are running in
+different servers.</p>
+<p><strong>Web Service Mode</strong></p>
+<p>The dynamic forms web application is deployed in a server, and the
+dynamic forms web service is deployed in a different server, in which
+the rule execution server is deployed as well and web service
+application will interact with rule engine with J2SE way.</p>
+</div>
+<div class="section" id="sequence-diagrams">
+<h2>Sequence Diagrams<a class="headerlink" href="#sequence-diagrams" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="move-to-next-page">
+<h3>Move to Next Page<a class="headerlink" href="#move-to-next-page" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="move-to-previous-page">
+<h3>Move to Previous Page<a class="headerlink" href="#move-to-previous-page" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Invocation</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="jump-navigation">
+<h3>Jump Navigation<a class="headerlink" href="#jump-navigation" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="brms-deployment-architecture">
+<h2>BRMS Deployment Architecture<a class="headerlink" href="#brms-deployment-architecture" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="rule-artifacts-and-ui-design">
+<h2>Rule Artifacts and UI Design<a class="headerlink" href="#rule-artifacts-and-ui-design" title="Permalink to this headline">¶</a></h2>
+<p>One typical DF project structure looks like this:</p>
+<p>The below describes these projects:</p>
+<ul class="simple">
+<li>Common Rules Project contains basic BOM which defines common
+questionnaire model, helper and utilities.</li>
+<li>DF Rules Project, stand for dynamic form rules project, is
+responsible for the actual questionnaire definitions and related
+rules. This part can be designed to multiple projects based on the
+questionnaire complexity.</li>
+<li>Web Project is responsible to render the questionnaire.</li>
+<li>Business Rule Project is optional, based on the actual business
+requirement.</li>
+</ul>
+</div>
+<div class="section" id="rule-flow-design">
+<h2>Rule Flow Design<a class="headerlink" href="#rule-flow-design" title="Permalink to this headline">¶</a></h2>
+<p>As described in above diagram, rule flow is typical written in the DF
+rule project. The main rule flow is shown below.</p>
+</div>
+<div class="section" id="rule-design">
+<h2>Rule Design<a class="headerlink" href="#rule-design" title="Permalink to this headline">¶</a></h2>
+<p>The following screenshot illustrates the detailed construct of rule
+packages in one typical DF rule project.</p>
+<p>This rule project provides a number of rule templates for the
+definitions of pages, groups, sections and questions.</p>
+<p>In question definition, the decision table is used to allow questions to
+be defined outside of any questionnaire flow. The question code is the
+identifier of the question definition.</p>
+<p>In question option definition, the decision table is used to define all
+the options of questions outside of question definition.</p>
+<p>In page definition, the decision table is used to allow business user to
+define the dynamic form page property.</p>
+<p>The page code is the identifier of this page.</p>
+<p>In group definition, the decision table is used to define groups for
+better rendering in the UI. Groups only need to be defined once and will
+be reused throughout all question definitions in the questionnaire
+application, if the Multiple property of group is set to true, the last
+column “Add A Group Instance When Initializing” is used to indicate
+whether a group instance will be added to a page or not.</p>
+<p>In section definition, the decision table is used to define sections for
+better rendering in the UI. Sections only need to be defined once and
+will be reused throughout the application.</p>
+<p>In the decision table of additional question attribute, business users
+can define whether the answer of this question is mandatory, value type,
+default response, max length, regular expression constraint and the
+invalid message against constraint.</p>
+<p>If required property of question is set to true, the client side will
+give the hint about the error message.</p>
+<p>If response format is selected, the client side will validate user’s
+response and show error message to users if incorrect format response is
+input.</p>
+<p>In the decision table of additional page attribute definition, business
+users can define the help document for pages, it will pop up the related
+help content when mouse moves through the page header in UI.</p>
+<p>If both help text and help URL are set, help text will be used.</p>
+<p>In the decision table of additional group attribute definition, business
+users can define the help document for groups, it will pop up the
+related help content when mouse moves through the group header in UI.</p>
+<p>If both help text and help URL are set, help text will be used.</p>
+<p>In the decision table of additional section attribute definition,
+business users can define the help document for sections, it will pop up
+the related help content when mouse moves through the section header in
+UI.</p>
+<p>If both help text and help URL are set, help text will be used.</p>
+<p>In option definition, the decision table “Option Definition” is used to
+define options for questions with specific types-SINGLE_SELECT,
+MULTI_SELECT, MULTI_CHOICE, RADIO etc.</p>
+<p>Since sometimes is required to create interactive web applications,
+below function is provided to support .</p>
+<p>In the following decision table “Triggering Event Definition”, business
+users can register questions that will trigger the AJAX invocation. In
+column “Client Event”, there are two options for user to choose:
+refreshing the question and refreshing the page. Both of them will
+submit the whole page, the difference is refreshing the page will
+refresh the whole page, but refreshing the question only refreshes the
+affected questions minimally.</p>
+<p>After registering the questions here, users can author action rules to
+implement the event triggering for these question. For example:</p>
+<p><strong>*if*</strong></p>
+<p><em>the response of question **City*</em> on page <strong>PersonalInfo</strong> is
+<strong>&#8220;XXX&#8221;*</strong></p>
+<p><strong>*then*</strong></p>
+<p><em>change options for question **District*</em> on page <strong>PersonalInfo</strong> to
+<strong>{</strong> <strong>&#8220;X1&#8221;</strong> , <strong>&#8220;X2&#8221;</strong> , <strong>&#8220;X2&#8221;</strong> <strong>}</strong> ;*</p>
+<p>In forms definition, the decision table “Form Definition” is used to set
+up forms through setting the mapping between pages, groups, sections and
+questions.</p>
+<p>The following decision table “Question Event Activity Definition”
+provides a simple way for user to define standard event behaviors for
+questions.</p>
+<p>If one question’s visibility depends on another question’s response, you
+can define this reactivity in above decision table, during rendering
+client-side JavaScript code will be generated based on above definition.
+Now only SHOW/HIDE activity is supported, but can be extended as needed.</p>
+</div>
+<div class="section" id="xom-design">
+<h2>XOM Design<a class="headerlink" href="#xom-design" title="Permalink to this headline">¶</a></h2>
+<p>Questionnaire object model is the core model of the ODM Dynamic Forms
+Asset. In this model it defines the objects such as page, question and
+group, and so on, which will be used in the rules authoring. The
+following class diagram illustrates the architecture of the
+questionnaire object model.</p>
+<p>The following table describes the main classes in above questionnaire
+object model diagram.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="93%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Class Name</strong></td>
+<td><strong>Class Description</strong></td>
+</tr>
+<tr class="row-even"><td>Questionnaire</td>
+<td>Questionnaire is the concrete implementation of IQuestionnaire. It defines kinds of behaviors of dynamic forms that are used to navigate and change forms at run time such as adding, removing and getting page. The dynamic forms consists of pages and page items on pages such as, questions and groups.</td>
+</tr>
+<tr class="row-odd"><td>QuestionnaireItem</td>
+<td>QuestionnaireItem is the abstract implementation of IQuestionnaireItem. Base class for all questionnaire items: page, group, question etc.</td>
+</tr>
+<tr class="row-even"><td>Question</td>
+<td>Question is the concrete implementation of IQuestion. It Defines the question which is used to describe form fields on pages, and besides the methods declared in the interface IQuestionnaireItem there are many other methods declared in this class used to describe form fields such as response type, options, respons, and so on.</td>
+</tr>
+<tr class="row-odd"><td>Option</td>
+<td>Option is is the concrete implementation of IOption. It defines the options of questions.</td>
+</tr>
+<tr class="row-even"><td>Page</td>
+<td>Page is the concrete implementation of IPage. It defines a container &#8220;Page&#8221; for storing a list of page items which will be shows to user as a page. The page item can be a question, a section or a group.</td>
+</tr>
+<tr class="row-odd"><td>Group</td>
+<td>Group is the concrete implementation of IGroup. It defines a container &#8220;Group&#8221; for storing a list of questions and sections which will be rendered as a group on a page. It cannot be shown to user independent with a page.</td>
+</tr>
+<tr class="row-even"><td>Section</td>
+<td>Section is the concrete implementation of ISection. It defines a container &#8220;Section&#8221; for storing a list of questions which will be rendered as a section on a group or a page. It cannot be shown to user independent with a group or a page.</td>
+</tr>
+<tr class="row-odd"><td>PageItemContainer</td>
+<td>PageItemContainer is the abstract implementation of IPageItemContainer. Base class for defining the container that holds page items.</td>
+</tr>
+<tr class="row-even"><td>IPageItem</td>
+<td>The interface defines the item that can be put into the container defined by the interface IPageItemContainer, this interface is a mark-up interface without any method.</td>
+</tr>
+<tr class="row-odd"><td>Event</td>
+<td>Event is the concrete implementation of IEvent. It is to define the event which will be binded to questions for triggering invocation.</td>
+</tr>
+<tr class="row-even"><td>ClientAction</td>
+<td>ClientAction is the concrete implementation of IClientAction. It is to define client actions which are used to respond to invocation.</td>
+</tr>
+<tr class="row-odd"><td>AjaxHandler</td>
+<td>AjaxHandler is the concrete implementation of IAjaxHandler. It is used to handle invocation.</td>
+</tr>
+<tr class="row-even"><td>InitializationHelper</td>
+<td>A class contains helper methods for initializing and localizing questionnaire.</td>
+</tr>
+<tr class="row-odd"><td>QuestionnaireHelper</td>
+<td>A class contains helper methods for questionnaire.</td>
+</tr>
+<tr class="row-even"><td>QuestionnaireUtil</td>
+<td>A class contains utility methods for miscellaneous functionalities, such as converting response or getting kinds of page items etc.</td>
+</tr>
+<tr class="row-odd"><td>EventActivity</td>
+<td>EventActivity is the concrete implementation of IEventActivity. It is to define the activity and bind the related trigging question and affected page items (question, section, and group) together.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bom-design">
+<h2>BOM Design<a class="headerlink" href="#bom-design" title="Permalink to this headline">¶</a></h2>
+<p>The Business Action Language uses the Business Object Model (BOM) which
+is on top of the actual object model. The BOM is used to define a
+language vocabulary of nouns (<em>objects and attributes</em>) and verbs
+(<em>methods</em>) in which to express the BAL rules and decision tables. In
+most cases, there is a one-to-one mapping between BOM objects and the
+underlying object model.</p>
+<p>See the “Dynamic Forms Model Descriptions.pdf” for more details of BOM
+design.</p>
+<blockquote>
+<div>Dynamic Domain Design</div></blockquote>
+<hr class="docutils" />
+<p>A dynamic domain is a way of defining the set of possible values for a
+type. With dynamic domain, the set of values is stored and managed
+outside the business object model, and changes to the set of values are
+automatically reflected in the BOM. When policy managers write business
+rules using the type, they choose from a list of values that is created
+dynamically and always up-to-date.</p>
+<p>In Dynamic Forms Services Asset, a customized plug-in is developed for
+the decision table. Custom properties need be configured to enable the
+dynamic domain for a BOM class in Rule Designer. The following image
+shows the configuration for question code.</p>
+<p>There are six properties below that could be specified:</p>
+<p><strong>domainValueProviderName</strong></p>
+<p>This property is for the standard extension point of dynamic domain
+plug-in. It is mandatory and the value must be input as
+<strong>DecisionTableDomainValueProvider</strong>.</p>
+<p><strong>DecisionTableDomainValueProvider.projectName</strong></p>
+<p>This property is an optional property. The plug-in will search the
+decision tables in this rule project if it is set.</p>
+<p>If it is not set or the value is blank, the plug-in will use the current
+rule project by default.</p>
+<p><strong>DecisionTableDomainValueProvider.rulePackageName</strong></p>
+<p>This property is a mandatory property to specify the package for the
+source of domain values. It should be the fully qualified name of a
+current rule package.</p>
+<p><strong>DecisionTableDomainValueProvider.decisionTableName</strong></p>
+<p>This property is an optional property. The value of this property should
+be the name of a decision table. The plug-in will search this decision
+table under the specified rule package and use it as the source of
+domain values. If the value is not set, the plugin will search all
+decision tables in the specified rule package and its sub-packages.</p>
+<p><strong>DecisionTableDomainValueProvider.labelColumnIndex</strong></p>
+<p>This property is a mandatory property. It specifies the column index for
+the label (verbalization) of the domain value. 0 stands for the first
+column.</p>
+<p><strong>DecisionTableDomainValueProvider.codeColumnIndex</strong></p>
+<p>This is an optional property. It specifies the column index for the
+domain name (the member name of the BOM class). If it is not set or the
+value is blank, the plug-in will use the domain label instead. The index
+counts from 0, which means the first column is 0. Each sub-column will
+be counted separately. For example, if user wants to use “Label” column
+in below decision table as domain code, the property should be specified
+2.</p>
+<p><strong>Note:</strong> If you renamed the rule package or rules which are related to
+the dynamic domain configuration, you need to update the custom
+properties and the plugin will report errors on Problem view of Rule
+Designer if the configuration is wrong when you clean and re-build the
+workspace.</p>
+<p>For example, when double-clicking the QuestionCode entry in the BOM, the
+following screenshot will be presented.</p>
+<p>Fill the value in the Question Definition table, then click the
+Synchronize link, and the question code domain is generated.</p>
+</div>
+<div class="section" id="web-application-design">
+<h2>Web Application Design<a class="headerlink" href="#web-application-design" title="Permalink to this headline">¶</a></h2>
+<p>This section discusses web application architecture and UI layout.</p>
+<div class="section" id="ui-rending">
+<h3>UI Rending<a class="headerlink" href="#ui-rending" title="Permalink to this headline">¶</a></h3>
+<p>The figure below shows an example of a standard dynamic form application
+rendered on the Web Server, UI is responsive implemented with Bootstrap.</p>
+<p>The figure below shows the AJAX usage. If user clicks the Add button,
+one cloned group will be added in the current page.</p>
+<p>After clicking the button, user will see the page will have one more
+family info groups on the page.**
+**</p>
+<p>After finishing all the questions on the form wizard, users will see the
+summary page, as shown in the following figure.</p>
+</div>
+<div class="section" id="application-structure">
+<h3>Application Structure<a class="headerlink" href="#application-structure" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">In dynamic forms application, the web project structure includes the
+following items:</div>
+<div class="line">• Provide jQuery distribution for development</div>
+</div>
+<ul class="simple">
+<li>Custom HTML (jQuery) control template</li>
+<li>HTML (head and footer) and CSS sub divided by sections</li>
+<li>Dynamic Form configuration</li>
+</ul>
+<p><strong>jQuery &amp; Bootstrap Support</strong></p>
+<p>Currently jQuery and bootstrap is supported. The following snapshot
+represents some common jQuery control libraries used in default.jsp by
+default, more libraries can be added by customization.</p>
+<p><strong>Navigation Support</strong></p>
+<p>The following code snippet in default.jsp is responsible for the
+implementation of navigation bar, you could rewrite them as required.</p>
+<p><strong>Question Rendering</strong></p>
+<p>The following two code snippet show how the questions are rendered on
+the current page.</p>
+<p><strong>Localization Support</strong></p>
+<p>The following codes shows how to localize the strings on JSP pages
+through leveraging JSTL technology</p>
+<p><em>&lt;%&#64; taglib uri=&#8221;http://java.sun.com/jsp/jstl/fmt&#8221; prefix=&#8221;fmt&#8221;%&gt;</em></p>
+<p><a href="#id1"><span class="problematic" id="id2">*</span></a>&lt;fmt:setLocale value=&#8221;&lt;%=request.getLocale().toString()%&gt;&#8221;/&gt; *</p>
+<p><em>&lt;fmt:bundle basename=&#8221;dynamicforms_resource&#8221;&gt;</em></p>
+<p><em>&lt;fmt:message
+key=&#8221;com.ibm.websphere.ilog.dynamicforms.property.page.has.errors&#8221; /&gt;</em></p>
+<p>In order to localize the labels in FreeMarker templates you need to set
+DynamicFormsContext which holds the locale and base name of resource
+file to the current thread.</p>
+<p><strong>Form Validation</strong></p>
+<p>If the question definitions attribute is set to “required” in the
+decision table, the question requires an answer if it appears in the
+page. If the answer is not filled in, the user-friendly error message is
+presented, which is shown as in the following figure.</p>
+<p><strong>Form Configuration</strong></p>
+<p>In the web conf directory, the <strong>dynamicforms.properties</strong> file provides
+some advanced features for the Dynamic Forms Application through the
+following configurations.</p>
+<ol class="loweralpha simple">
+<li>Jump</li>
+</ol>
+<p>If the JUMP property is set to true, the page will have the ability to
+jump from one page to another.</p>
+<p>Note: The hidden page cannot jump to another page.</p>
+<div class="line-block">
+<div class="line">b) Auto Fill</div>
+<div class="line">If the AUTO Fill property is set to true, the sample answer can be
+predefined for the question. After this feature is used, the question
+answers need to be provided in the autoFill.xml.</div>
+</div>
+<p>Also, you can set initial parameters in the <strong>web.xml</strong> as follows</p>
+</div>
+<div class="section" id="ui-layout-design">
+<h3>UI layout design<a class="headerlink" href="#ui-layout-design" title="Permalink to this headline">¶</a></h3>
+<p>The asset provides one tool – Layout Designer to help developers to
+design the UI layout.</p>
+<p>Please refer to Dynamic Forms Layout Editor User Manual.pdf for the more
+details.</p>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>SLF4j is used as the logging interface. SLF4J (Simple logging Façade for
+Java) provides a Java logging API by means of a simple façade pattern.
+The underlying logging backend is determined at runtime by adding the
+desired binding to the classpath.</p>
+<p>By default, Log4j jar is provided as the underlying logging backend.
+When Log4j is not found in classpath, the JDK logger will be used.</p>
+<p>User can edit ‘log4j.xml’ to declare user own categories, log levels and
+appenders (which determines the output terminal like standard out or a
+log file).</p>
+<p>The following is the default logging configuration used in the Dynamic
+Forms Asset.</p>
+<p><em>&lt;?xml version=&#8221;1.0&#8221; encoding=&#8221;UTF-8&#8221; ?&gt;</em></p>
+<p><em>&lt;!DOCTYPE log4j:configuration SYSTEM &#8220;log4j.dtd&#8221;&gt;</em></p>
+<p><em>&lt;log4j:configuration xmlns:log4j=&#8217;http://jakarta.apache.org/log4j/&#8217;&gt;</em></p>
+<p><em>&lt;appender name=&#8221;CONSOLE&#8221; class=&#8221;org.apache.log4j.ConsoleAppender&#8221;&gt;</em></p>
+<p><em>&lt;layout class=&#8221;org.apache.log4j.PatternLayout&#8221;&gt;</em></p>
+<p><em>&lt;param name=&#8221;ConversionPattern&#8221; value=&#8221;%d -%-4r [%t] %-5p %x - %m%n&#8221;
+/&gt;</em></p>
+<p><em>&lt;/layout&gt;</em></p>
+<p><em>&lt;filter class=&#8221;org.apache.log4j.varia.LevelRangeFilter&#8221;&gt;</em></p>
+<p><em>&lt;param name=&#8221;LevelMax&#8221; value=&#8221;ERROR&#8221; /&gt;</em></p>
+<p><em>&lt;param name=&#8221;LevelMin&#8221; value=&#8221;TRACE&#8221; /&gt;</em></p>
+<p><em>&lt;/filter&gt;</em></p>
+<p><em>&lt;/appender&gt;</em></p>
+<p><em>&lt;appender name=&#8221;FILE&#8221; class=&#8221;org.apache.log4j.RollingFileAppender&#8221;&gt;</em></p>
+<p><em>&lt;param name=&#8221;File&#8221; value=&#8221;logs/dynamicforms.log&#8221;/&gt;</em></p>
+<p><em>&lt;param name=&#8221;MaxFileSize&#8221; value=&#8221;1MB&#8221; /&gt;</em></p>
+<p><em>&lt;param name=&#8221;Append&#8221; value=&#8221;true&#8221; /&gt;</em></p>
+<p><em>&lt;param name=&#8221;MaxBackupIndex&#8221; value=&#8221;30&#8221; /&gt;</em></p>
+<p><em>&lt;param name=&#8221;Threshold&#8221; value=&#8221;DEBUG&#8221; /&gt;</em></p>
+<p><em>&lt;layout class=&#8221;org.apache.log4j.PatternLayout&#8221;&gt;</em></p>
+<p><em>&lt;param name=&#8221;ConversionPattern&#8221; value=&#8221;[%d{ISO8601}]%5p%6.6r[%t]%x -
+%m%n&#8221; /&gt;</em></p>
+<p><em>&lt;/layout&gt;</em></p>
+<p><em>&lt;/appender&gt;</em></p>
+<p><em>&lt;logger name=&#8221;freemarker&#8221;&gt;</em></p>
+<p><em>&lt;level value=&#8221;ERROR&#8221;/&gt;</em></p>
+<p><a href="#id3"><span class="problematic" id="id4">*</span></a>&lt;appender-ref ref=&#8221;FILE&#8221; /&gt; *</p>
+<p><em>&lt;/logger&gt;</em></p>
+<p><em>&lt;logger name=&#8221;com.ibm.websphere.ilog.dynamicforms.ui.util&#8221;&gt;</em></p>
+<p><em>&lt;level value=&#8221;ERROR&#8221;/&gt;</em></p>
+<p><a href="#id5"><span class="problematic" id="id6">*</span></a>&lt;appender-ref ref=&#8221;FILE&#8221; /&gt; *</p>
+<p><em>&lt;/logger&gt;</em></p>
+<p><em>&lt;logger name=&#8221;org.mortbay&#8221;&gt;</em></p>
+<p><em>&lt;level value=&#8221;ERROR&#8221;/&gt;</em></p>
+<p><a href="#id7"><span class="problematic" id="id8">*</span></a>&lt;appender-ref ref=&#8221;FILE&#8221; /&gt; *</p>
+<p><em>&lt;/logger&gt;</em></p>
+<p><em>&lt;root&gt;</em></p>
+<p><em>&lt;level value=&#8221;ERROR&#8221; /&gt;</em></p>
+<p><em>&lt;appender-ref ref=&#8221;FILE&#8221; /&gt;</em></p>
+<p><em>&lt;/root&gt;</em></p>
+<p><em>&lt;/log4j:configuration&gt;</em></p>
+</div>
+<div class="section" id="dynamic-forms-simulation">
+<h2>Dynamic Forms Simulation<a class="headerlink" href="#dynamic-forms-simulation" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of developing Dynamic Forms simulation is to provide a tool
+for validating rules in RTS through simulating forms which is close to
+the forms accessed by end users. It dynamically generates ruleset
+archive and executes rules and render forms based on execution result,
+the behavior of forms is exactly same as the forms that will be accessed
+by end user.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Architecture and Design</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#intended-audience">Intended Audience</a></li>
+<li><a class="reference internal" href="#feature-overview">Feature overview</a></li>
+<li><a class="reference internal" href="#use-case-diagram">Use Case Diagram</a><ul>
+<li><a class="reference internal" href="#manage-question">Manage Question</a></li>
+<li><a class="reference internal" href="#manage-pages">Manage Pages</a></li>
+<li><a class="reference internal" href="#manage-groups">Manage Groups</a></li>
+<li><a class="reference internal" href="#manage-sections">Manage Sections</a></li>
+<li><a class="reference internal" href="#manage-form-ui">Manage Form UI</a></li>
+<li><a class="reference internal" href="#manage-answers">Manage Answers</a></li>
+<li><a class="reference internal" href="#manage-form-validation">Manage Form Validation</a></li>
+<li><a class="reference internal" href="#manage-process">Manage Process</a></li>
+<li><a class="reference internal" href="#manage-page-navigation">Manage Page Navigation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#application-architecture">Application Architecture</a></li>
+<li><a class="reference internal" href="#sequence-diagrams">Sequence Diagrams</a><ul>
+<li><a class="reference internal" href="#move-to-next-page">Move to Next Page</a></li>
+<li><a class="reference internal" href="#move-to-previous-page">Move to Previous Page</a></li>
+<li><a class="reference internal" href="#jump-navigation">Jump Navigation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#brms-deployment-architecture">BRMS Deployment Architecture</a></li>
+<li><a class="reference internal" href="#rule-artifacts-and-ui-design">Rule Artifacts and UI Design</a></li>
+<li><a class="reference internal" href="#rule-flow-design">Rule Flow Design</a></li>
+<li><a class="reference internal" href="#rule-design">Rule Design</a></li>
+<li><a class="reference internal" href="#xom-design">XOM Design</a></li>
+<li><a class="reference internal" href="#bom-design">BOM Design</a></li>
+<li><a class="reference internal" href="#web-application-design">Web Application Design</a><ul>
+<li><a class="reference internal" href="#ui-rending">UI Rending</a></li>
+<li><a class="reference internal" href="#application-structure">Application Structure</a></li>
+<li><a class="reference internal" href="#ui-layout-design">UI layout design</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#dynamic-forms-simulation">Dynamic Forms Simulation</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/architecture_updated_not_pushed.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Jeff Cai.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/architecture_updated_not_pushed.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

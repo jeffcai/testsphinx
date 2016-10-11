@@ -8,10 +8,13 @@ To try sphinx for building more maintainable and deployable documents
 
 make html
 
+## Convert
+
+refer to http://peintinger.com/?p=365 for converting docx to rst, this is sample cmd: pandoc.exe -f docx architecture.docx -t rst -o architecture.rst, and note that need to save doc file as docx at first, after conversion complete need embed images (all images can be get by unzipping the docx file).
+
 
 ## TODO
 
-- doc converted to rst with pandoc or something else
 - more concise table
 - footnote
 - quick search function
